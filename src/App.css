@@ -1,5 +1,18 @@
+*{
+  color:#16697a;
+  font-family: serif;
+}
+.text-color{
+  color:#ff9500;
+}
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
 }
 
 .App-logo {
@@ -35,4 +48,38 @@
   to {
     transform: rotate(360deg);
   }
+}
+/* ///////////////////login page/////////////////////// */
+.login-container{
+  width: 650px;
+  background-color: #ede7e3;
+  border-radius: 15px;
+}
+Form .login-button{
+  background-color: #ffa62b;
+  --bs-btn-hover-border-color:#ffa62b;
+}
+ input {
+  border-radius: 5px;
+  border:none;
+}
+
+.home-container{
+  width: 500px;
+  background-color: #ede7e3;
+  box-shadow: #ffa72b67 0px 4px 12px;
+border-radius: 15px;
+}
+
+.App .butt{
+  background-color: #ffa62b;
+  --bs-btn-hover-border-color:#ffa62b;
+}
+
+
+.trans-container{
+  background-color: #ede7e3;
+  box-shadow: #ffa72b39 0px 4px 8px;
+
+  border-radius: 15px;
 }

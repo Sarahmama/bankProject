@@ -3,23 +3,44 @@ import React, { useState } from "react";
 import { NavLink } from "react-router";
 import "bootstrap/dist/css/bootstrap.css"; // Bootstrap CSS for styling
 import "../App.css";
-import { profile } from "../api/auth";
-import { useMutation, useQuery } from "@tanstack/react-query";
-
+import { deposit, profile, withdraw } from "../api/auth";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const Home = () => {
+  const [action, setAction] = useState("deposit");
+  const queryClient = useQueryClient();
+  const { data, isFetching, isSuccess } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => profile(),
+  });
+  const { username, image, balance } = data || {};
 
+  const depositMutate = useMutation({
+    mutationKey: ["deposit"],
+    mutationFn: (amount) => deposit(amount),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["profile"] });
+    },
+  });
+  const withdrawMutate = useMutation({
+    mutationKey: ["withdraw"],
+    mutationFn: (amount) => withdraw(amount),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["profile"] });
+    },
+  });
 
-const { data, isFetching, isSuccess } = useQuery({
-  queryKey: ["profile"],
-   queryFn: ()=>profile(),
- });
-
-
-
- const { username,image,balance } = data || {};
-
-    
+  const handleSubmit = (values) => {
+    if (action === "deposit") {
+      depositMutate.mutate({
+        amount: values.amount,
+      });
+    } else {
+      withdrawMutate.mutate({
+        amount: values.amount,
+      });
+    }
+  };
 
   return (
     <div className="App">
@@ -31,7 +52,6 @@ const { data, isFetching, isSuccess } = useQuery({
         </div>
       </div>
       <div className="home-container  d-flex align-items-center  flex-column pt-5 pb-5 m-4">
-       
         <div className="d-flex justify-content-around mb-3">
           <div class="form-check form-check-inline ms-5">
             <input
@@ -40,7 +60,7 @@ const { data, isFetching, isSuccess } = useQuery({
               name="action"
               id="deposit"
               value="deposit"
-            
+              onChange={() => setAction("deposit")}
             />
             <label class="form-check-label" for="deposit">
               Deposit
@@ -53,20 +73,19 @@ const { data, isFetching, isSuccess } = useQuery({
               name="action"
               id="withdraw"
               value="withdraw"
-        
-
+              onChange={() => setAction("withdraw")}
             />
             <label class="form-check-label" for="withdraw">
               Withdraw
             </label>
           </div>
-          
         </div>
         <Formik
           className="container "
           initialValues={{ amount: "" }}
           onSubmit={(values) => {
-               }}
+            handleSubmit(values);
+          }}
         >
           <Form className=" row mt-5">
             <label>Amount</label>
@@ -86,9 +105,5 @@ const { data, isFetching, isSuccess } = useQuery({
     </div>
   );
 };
-
- 
-
-
 
 export default Home;

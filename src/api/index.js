@@ -4,7 +4,15 @@ const instance = axios.create({
   baseURL: "https://react-bank-project.eapi.joincoded.com/",
 });
 instance.interceptors.response.use((response) => {
-    return response.data;
-  });
-  
+  return response.data;
+});
+
+instance.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 export default instance;

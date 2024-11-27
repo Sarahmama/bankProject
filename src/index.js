@@ -10,6 +10,7 @@ import Home from './components/Home';
 import Transaction from './components/Transaction';
 import { QueryClient,QueryClientProvider } from '@tanstack/react-query';
 import Profile from './components/Profile';
+import AllUsers from './components/AllUsers';
 
 const queryClient = new QueryClient()
 
@@ -36,7 +37,11 @@ const router = createBrowserRouter([
   },{
   path:"/profile",
   element: <Profile/>
-  }
+  },
+  {
+    path:"/allUsers",
+    element: <AllUsers/>
+    }
  
 ]);
 

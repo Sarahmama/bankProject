@@ -20,7 +20,7 @@ const Profile = () => {
       <div className='container  py-5 '>
       <div className='mb-5 '>
       <img className='rounded-5'
-              src={image === '' ? profileImg : image} 
+              src={image === '' ? profileImg :"https://react-bank-project.eapi.joincoded.com/"+ image} 
               width="100px" 
               alt="User Profile" 
             />        </div>

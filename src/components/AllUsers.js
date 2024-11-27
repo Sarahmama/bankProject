@@ -1,11 +1,11 @@
 import React from "react";
-import { getAllUsers } from "../api/auth";
-import { useQuery } from "@tanstack/react-query";
+import { getAllUsers, transfertoUser } from "../api/auth";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import User from "./User";
 
 const AllUsers = () => {
   const { data, isFetching, isSuccess } = useQuery({
-    queryKey: ["getAll"],
+    queryKey: ["Users"],
     queryFn: () => getAllUsers(),
   });
 

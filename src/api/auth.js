@@ -1,4 +1,13 @@
 import instance from "./index";
+const transfertoUser = async (myUsername, formData) => {
+  const data = await instance.put(
+    `/mini-project/api/transactions/transfer/${myUsername}`,
+    formData
+  );
+
+  console.log("getAllUsers", data);
+  return data;
+};
 const getAllUsers = async () => {
   const data = await instance.get("/mini-project/api/auth/users");
 
@@ -57,4 +66,5 @@ export {
   transaction,
   deposit,
   getAllUsers,
+  transfertoUser,
 };

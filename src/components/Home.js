@@ -1,16 +1,32 @@
 import { Field, Form, Formik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router";
 import "bootstrap/dist/css/bootstrap.css"; // Bootstrap CSS for styling
 import "../App.css";
+import { profile } from "../api/auth";
+import { useMutation, useQuery } from "@tanstack/react-query";
+
 
 const Home = () => {
+
+
+const { data, isFetching, isSuccess } = useQuery({
+  queryKey: ["profile"],
+   queryFn: ()=>profile(),
+ });
+
+
+
+ const { username,image,balance } = data || {};
+
+    
+
   return (
     <div className="App">
       <div className="home-container  d-flex align-items-center  flex-column pt-5 pb-5 m-4">
         <h3 className="mb-5">Your Available Balance: </h3>
         <div className="d-flex flex-row">
-          <h5 className="m-1">00000 </h5>
+          <h5 className="m-1">{balance} </h5>
           <h5 className="m-1 text-color">KWD</h5>
         </div>
       </div>
@@ -21,11 +37,12 @@ const Home = () => {
             <input
               class="form-check-input"
               type="radio"
-              name="inlineRadioOptions"
-              id="inlineRadio1"
-              value="option1"
+              name="action"
+              id="deposit"
+              value="deposit"
+            
             />
-            <label class="form-check-label" for="inlineRadio1">
+            <label class="form-check-label" for="deposit">
               Deposit
             </label>
           </div>
@@ -33,11 +50,13 @@ const Home = () => {
             <input
               class="form-check-input"
               type="radio"
-              name="inlineRadioOptions"
-              id="inlineRadio2"
-              value="option2"
+              name="action"
+              id="withdraw"
+              value="withdraw"
+        
+
             />
-            <label class="form-check-label" for="inlineRadio2">
+            <label class="form-check-label" for="withdraw">
               Withdraw
             </label>
           </div>
@@ -47,8 +66,7 @@ const Home = () => {
           className="container "
           initialValues={{ amount: "" }}
           onSubmit={(values) => {
-            // handle form submission
-          }}
+               }}
         >
           <Form className=" row mt-5">
             <label>Amount</label>
@@ -68,5 +86,9 @@ const Home = () => {
     </div>
   );
 };
+
+ 
+
+
 
 export default Home;
